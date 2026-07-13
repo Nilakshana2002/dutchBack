@@ -3,8 +3,6 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 
 import authRoutes from './routes/authRoutes.js';
-import employeeRoutes from './routes/employeeRoutes.js';
-import staffSelfRoutes from './routes/staffSelfRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import roomRoutes from './routes/roomRoutes.js';
@@ -14,6 +12,7 @@ import foodRoutes from './routes/foodRoutes.js';
 // merged routes (both branches kept)
 import offerRoutes from './routes/offerRoutes.js';
 import roomFeatureRoutes from './routes/roomFeatureRoutes.js';
+import galleryRoutes from './routes/galleryRoutes.js';
 
 // upload controller (from anjana branch)
 import { uploadImage, uploadMiddleware } from './controllers/uploadController.js';
@@ -46,14 +45,13 @@ app.use(express.json());
 
 // routes
 app.use('/api/auth', authRoutes);
-app.use('/api/staff', staffSelfRoutes);
-app.use('/api/admin', employeeRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/rooms', roomRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/foods', foodRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/gallery', galleryRoutes);
 
 // merged new modules
 app.use('/api/offers', offerRoutes);
