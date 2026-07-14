@@ -14,6 +14,7 @@ import foodRoutes from './routes/foodRoutes.js';
 // merged routes (both branches kept)
 import offerRoutes from './routes/offerRoutes.js';
 import roomFeatureRoutes from './routes/roomFeatureRoutes.js';
+import mealPlanRoutes from './routes/mealPlanRoutes.js';
 
 // upload controller (from anjana branch)
 import { uploadImage, uploadMiddleware } from './controllers/uploadController.js';
@@ -58,6 +59,7 @@ app.use('/api/ai', aiRoutes);
 // merged new modules
 app.use('/api/offers', offerRoutes);
 app.use('/api/room-features', roomFeatureRoutes);
+app.use('/api/meal-plans', mealPlanRoutes);
 
 // shared upload route
 app.post('/api/upload/image', uploadMiddleware, uploadImage);
