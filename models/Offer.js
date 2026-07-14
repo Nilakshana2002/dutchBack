@@ -26,7 +26,7 @@ const offerSchema = new mongoose.Schema({
     },
     applicableRoomTypes: [{
         type: String,
-        enum: ['deluxe', 'luxury', 'semiluxury', 'dayOuting', 'couple'],
+        enum: ['standard', 'deluxe', 'luxury', 'couple'],
         required: true
     }],
     isActive: {
