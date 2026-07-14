@@ -8,7 +8,7 @@ const roomSchema = new mongoose.Schema({
   },
   package: {
     type: String,
-    enum: ['full-board', 'day-use'],
+    enum: ['full-board', 'day-use', 'room-only', 'bb', 'hb', 'fb'],
     default: 'full-board',
   },
   roomNumber: {
