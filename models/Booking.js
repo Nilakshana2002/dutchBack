@@ -23,6 +23,11 @@ const bookingSchema = new mongoose.Schema({
     ref: 'Room',
     required: true,
   },
+  mealPlan: {
+    type: String,
+    enum: ['Room Only', 'BB', 'HB', 'FB', 'Not Specified'],
+    default: 'Not Specified',
+  },
   checkIn: {
     type: Date,
     required: true,
