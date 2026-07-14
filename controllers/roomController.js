@@ -53,7 +53,7 @@ export const getRoomsByCategory = async (req, res) => {
 
       return {
         ...room.toObject(),
-        isAvailable: !isOccupied && room.status !== 'maintenance'
+        isAvailable: !isOccupied && room.status === 'available'
       };
     });
 
@@ -81,7 +81,7 @@ export const checkRoomAvailability = async (req, res) => {
       return res.status(404).json({ message: 'Room not found' });
     }
 
-    if (room.status === 'maintenance') {
+    if (room.status !== 'available') {
       return res.json({ available: false });
     }
 
@@ -225,14 +225,6 @@ export const updateRoom = async (req, res) => {
   try {
     const existingRoom = await Room.findById(req.params.id);
     if (!existingRoom) return res.status(404).json({ message: 'Room not found' });
-    
-    if (existingRoom.status === 'occupied' && req.body.status && req.body.status !== 'occupied') {
-      return res.status(400).json({ message: 'Cannot manually change the status of an occupied room. Must be done via check-out.' });
-    }
-    
-    if (req.body.status === 'maintenance' && existingRoom.status !== 'available' && existingRoom.status !== 'maintenance') {
-      return res.status(400).json({ message: 'Only available rooms can be set to maintenance.' });
-    }
 
     const room = await Room.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -257,16 +249,6 @@ export const updateRoomStatusByNumber = async (req, res) => {
     const rooms = await Room.find({ roomNumber });
     if (rooms.length === 0) {
       return res.status(404).json({ message: 'No rooms found with this room number' });
-    }
-
-    const isOccupied = rooms.some(r => r.status === 'occupied');
-    if (isOccupied && status !== 'occupied') {
-       return res.status(400).json({ message: 'Cannot manually change the status of occupied rooms.' });
-    }
-    
-    const isReserved = rooms.some(r => r.status === 'reserved');
-    if (status === 'maintenance' && isReserved) {
-       return res.status(400).json({ message: 'Cannot set reserved rooms to maintenance.' });
     }
 
     const result = await Room.updateMany(
