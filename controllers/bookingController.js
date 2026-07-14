@@ -449,15 +449,7 @@ export const getDashboardStats = async (req, res) => {
             Room.countDocuments({ status: 'occupied' }),
             Room.countDocuments({ status: 'reserved' }),
             Room.countDocuments({ status: 'available' }),
-            Booking.aggregate([
-                { 
-                    $match: { 
-                        status: { $in: ['reserved', 'checked_in', 'checked_out'] },
-                        createdAt: { $gte: startOfToday, $lte: endOfToday }
-                    } 
-                },
-                { $group: { _id: null, total: { $sum: '$total' } } },
-            ]),
+            Booking.find({ createdAt: { $gte: startOfToday, $lte: endOfToday } }).select('user guestInfo'),
         ]);
 
         const customerKeys = new Set();
@@ -468,8 +460,7 @@ export const getDashboardStats = async (req, res) => {
 
         const totalCustomersToday = customerKeys.size;
 
-        const roomRev = bookingRevenue[0]?.total || 0;
-        const totalRevenue = roomRev;
+        const totalRevenue = 0;
 
         res.json({
             totalBookings,

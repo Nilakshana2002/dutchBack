@@ -16,8 +16,6 @@ import {
     getMonthlyRevenue,
 } from '../controllers/bookingController.js';
 
-// Staff management
-import { getStaff, getStaffById, createStaff, updateStaff, deleteStaff } from '../controllers/staffController.js';
 
 
 // Audit & Notifications
@@ -36,7 +34,6 @@ router.use(protect);
 
 // Role restrictions by route prefix
 router.use('/users', admin);
-router.use('/staff', admin);
 
 router.use('/contacts', admin);
 
@@ -70,13 +67,6 @@ router.delete('/rooms/:id', deleteRoom);
 router.get('/bookings', getBookings);
 router.get('/bookings/:id', getBookingById);
 router.put('/bookings/:id/status', updateBookingStatus);
-
-//Staff
-router.get('/staff', getStaff);
-router.get('/staff/:id', getStaffById);
-router.post('/staff', createStaff);
-router.put('/staff/:id', updateStaff);
-router.delete('/staff/:id', deleteStaff);
 
 
 // Audit & Notifications
