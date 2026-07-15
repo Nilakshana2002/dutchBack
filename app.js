@@ -24,6 +24,17 @@ dotenv.config();
 
 const app = express();
 
+// Database connection middleware (essential for serverless environment)
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        console.error('Database connection error in middleware:', error);
+        res.status(500).json({ error: 'Database connection failed' });
+    }
+});
+
 const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:5174',
